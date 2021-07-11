@@ -1,0 +1,6 @@
+input{
+    margin-bottom: 5px;
+}
+input:last-of-type{
+    margin-bottom: 10px;
+}

@@ -1,0 +1,12 @@
+.auth{
+    background: #ff2265;
+    border: 0;
+    padding: 10px 0;
+    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.5s ease-in-out;
+}
+.auth:hover{
+    background: red;
+}

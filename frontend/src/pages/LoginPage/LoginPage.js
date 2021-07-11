@@ -1,0 +1,26 @@
+import cl from '../../shared/Wrapper.module.css';
+import classes from '../SharedComponents/AuthForm.module.css';
+import LoginField from "./components/LoginField";
+import AuthButton from "../SharedComponents/AuthButton";
+import NewUser from "./components/NewUser";
+import ShowPass from "./components/ShowPass";
+import {Link} from "react-router-dom";
+
+function LoginPage(props) {
+    return (
+        <div className={cl.wrapper}>
+            <div className={classes.authForm}>
+                <h2>FINANCE APP</h2>
+                <LoginField type={"email"} placeholder={"почта"}/>
+                <LoginField type={"password"} placeholder={"пароль"}/>
+                <ShowPass text={"запомнить пароль"}/>
+                <AuthButton text={"Авторизоваться"}/>
+                <Link to="/signup">
+                    <NewUser text={"Новый пользователь?"}/>
+                </Link>
+            </div>
+        </div>
+    );
+}
+
+export default LoginPage;

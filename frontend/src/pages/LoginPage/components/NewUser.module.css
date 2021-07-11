@@ -1,0 +1,13 @@
+.new{
+    background: none;
+    border: 0;
+    font-size: 14px;
+    padding: 5px 0;
+    font-weight: 600;
+    transition: 0.5s ease-in-out;
+    border-bottom: 2px solid transparent;
+}
+.new:hover{
+    color: black;
+    border-bottom: 2px solid black;
+}

@@ -1,0 +1,18 @@
+.field{
+    border: 0;
+    padding: 3px 0;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+    transition: 0.5s ease-in-out;
+    background: none;
+}
+.field::placeholder{
+    font-size: 15px;
+    padding-left: 3px;
+    color: rgba(255, 255, 255, 0.8);
+}
+.field:focus{
+    outline: none;
+}
+.field:hover{
+    border-bottom: 2px solid white;
+}
