@@ -1,0 +1,7 @@
+.page{
+    border: 1px solid red;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

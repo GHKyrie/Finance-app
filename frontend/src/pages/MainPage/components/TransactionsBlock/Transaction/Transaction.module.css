@@ -1,0 +1,11 @@
+.transaction {
+    border-bottom: 1px solid springgreen;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.transaction p{
+    line-height: 17px;
+    margin: 5px;
+}

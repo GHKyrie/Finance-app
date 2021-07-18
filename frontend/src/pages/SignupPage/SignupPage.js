@@ -2,8 +2,8 @@ import "./SignupPage.module.css";
 import cl2 from "../SharedComponents/AuthForm.module.css";
 import cl1 from '../../shared/Wrapper.module.css';
 import AuthButton from "../SharedComponents/AuthButton";
-import NewUser from "../LoginPage/components/NewUser";
-import LoginField from "../LoginPage/components/LoginField";
+import NewUser from "../LoginPage/components/NewUser/NewUser";
+import LoginField from "../LoginPage/components/LoginField/LoginField";
 import {Link} from "react-router-dom";
 
 function SignupPage(props) {
@@ -15,7 +15,9 @@ function SignupPage(props) {
                 <LoginField type={"email"} placeholder={"почта"}/>
                 <LoginField type={"password"} placeholder={"пароль"}/>
                 <LoginField type={"password"} placeholder={"повторите пароль"}/>
-                <AuthButton text={"Зарегистрироваться"}/>
+                <Link to="/app">
+                    <AuthButton text={"Зарегистрироваться"}/>
+                </Link>
                 <Link to="/login">
                     <NewUser text={"Уже есть аккаунт?"}/>
                 </Link>

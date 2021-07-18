@@ -4,3 +4,6 @@ input{
 input:last-of-type{
     margin-bottom: 10px;
 }
+input[type=checkbox] {
+    margin-bottom: 0;
+}

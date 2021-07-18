@@ -11,6 +11,7 @@ input[type="checkbox"]
     outline: none;
     margin: 0;
     padding: 0;
+    margin-bottom: -10px;
 }
 .spas label{
     width: 200px;

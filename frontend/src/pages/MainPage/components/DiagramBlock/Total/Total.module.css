@@ -1,0 +1,14 @@
+.total{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.total *{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+.total h2{
+    font-weight: 500;
+}

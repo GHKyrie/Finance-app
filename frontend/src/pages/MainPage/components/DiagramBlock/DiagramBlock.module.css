@@ -1,0 +1,11 @@
+.diagramBlock{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+.diagram{
+    border: 1px dashed purple;
+    width: 250px;
+    height: 250px;
+    align-self: center;
+}

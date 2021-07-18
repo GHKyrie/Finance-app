@@ -1,0 +1,18 @@
+.totalStats{
+    display: flex;
+    border: 1px solid silver;
+}
+.totalStats *{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    justify-content: space-between;
+}
+.totalStats div{
+    width: 120px;
+    border: 1px solid blue;
+}
+.totalStats div:first-child{
+    margin-right: 15px;
+}
