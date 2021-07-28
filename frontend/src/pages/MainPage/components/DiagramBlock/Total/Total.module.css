@@ -7,8 +7,12 @@
     height: 50px;
     display: flex;
     align-items: center;
-    font-size: 15px;
+    font-size: 20px;
 }
 .total h2{
     font-weight: 500;
+
+}
+.total p{
+    color: rgba(255, 255, 255, 0.85);
 }

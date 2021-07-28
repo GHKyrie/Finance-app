@@ -1,5 +1,5 @@
 .transaction {
-    border-bottom: 1px solid springgreen;
+    border-bottom: 2px solid rgba(255,255,255,0.8);
     color: black;
     display: flex;
     flex-direction: column;

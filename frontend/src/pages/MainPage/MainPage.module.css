@@ -1,7 +1,9 @@
 .page{
-    border: 1px solid red;
-    height: 700px;
+    height: 900px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+h1{
+    text-align: center;
 }

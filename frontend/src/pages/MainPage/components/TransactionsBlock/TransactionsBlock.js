@@ -8,12 +8,12 @@ function TransactionsBlock(props) {
             <Fline />
             <Transaction
                 text={"Транспорт"}
-                price={"-R 60"}
+                price={"-₽ 60"}
                 date={"вс, июн. 20, 2021"}
             />
             <Transaction
                 text={"Перевод"}
-                price={"-R 46"}
+                price={"-₽ 46"}
                 date={"вс, июн. 22, 2021"}
             />
         </div>
