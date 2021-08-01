@@ -1,11 +1,16 @@
 import bodyParser from "body-parser";
 import express from 'express';
 import mysql from "mysql";
+import cors from "cors";
 
-const urlencodedParser = bodyParser.urlencoded({extended: false});
+
 const app = express();
+const jsonParser = express.json();
 const PORT = 5001;
 
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static('static'));
 app.use(express.json());
 
@@ -21,7 +26,7 @@ connection.connect(err => {
     console.log("Успешно соединено с базой данных");
 });
 
-app.post("/registration", (req, res) => {
+app.post("/registration", jsonParser, (req, res) => {
 
     if (!req.body) return res.sendStatus(400);
 
@@ -62,7 +67,7 @@ app.post("/registration", (req, res) => {
 });
 
 
-app.post("/authorization", (req, res) => {
+app.post("/authorization", jsonParser, (req, res) => {
     if (!req.body) return res.sendStatus(400);
 
     const email = req.body.email;
@@ -91,7 +96,7 @@ app.post("/authorization", (req, res) => {
 
 });
 
-app.post("/transactions", (req, res) => {
+app.post("/transactions", jsonParser,(req, res) => {
 
     if(!req.body) return res.sendStatus(400);
 
@@ -111,12 +116,16 @@ app.post("/transactions", (req, res) => {
 
 });
 
-app.get("/transactions", (req, res) => {
+app.get("/transactions", jsonParser,  (req, res) => {
     if (!req.body) return res.sendStatus(400);
 
     const uid = req.body.uid;
     const begin = req.body.begin;
     const end = req.body.end;
+    console.log(req.body);
+    console.log(uid);
+    console.log(begin);
+    console.log(end);
 
     connection.query("SELECT tag, exin, amount, datetime FROM transactions WHERE uid=? AND datetime>=? AND datetime<=?", [uid, begin, end], (err, results) => {
         if (err)
