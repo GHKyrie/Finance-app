@@ -10,6 +10,7 @@ input[type="checkbox"]
     border: none;
     outline: none;
     margin: 0;
+    margin-top: -9px;
     padding: 0;
     margin-bottom: -10px;
 }

@@ -1,28 +1,100 @@
 import "./SignupPage.module.css";
 import cl2 from "../SharedComponents/AuthForm.module.css";
 import cl1 from '../../shared/Wrapper.module.css';
-import AuthButton from "../SharedComponents/AuthButton";
-import NewUser from "../LoginPage/components/NewUser/NewUser";
-import LoginField from "../LoginPage/components/LoginField/LoginField";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import formcl from "../LoginPage/components/LoginField.module.css";
+import * as React from "react";
+import {useFormik} from "formik";
+import authcl from "../SharedComponents/AuthButton.module.css";
+import nusercl from "../LoginPage/components/NewUser.module.css";
 
 function SignupPage(props) {
+
+    const formik = useFormik({
+        initialValues: {
+            login: '',
+            email: '',
+            pass1: '',
+            pass2: ''
+        },
+        onSubmit: values => {
+            console.log(JSON.stringify(values, null, 4));
+        },
+    });
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+        "login": formik.values.login,
+        "password": formik.values.pass1,
+        "email": formik.values.email,
+        "mobile": "89867044909"
+    });
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    fetch("http://localhost:5001/registration", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+
+    const history = useHistory();
+
+    const redirect = (e) => {
+        e.preventDefault();
+        formik.handleSubmit();
+
+        const path = 'app';
+        history.push(path);
+    };
+
     return (
         <div className={cl1.wrapper}>
-            <div className={cl2.authForm}>
+            <form className={cl2.authForm} onSubmit={redirect}>
                 <h2>FINANCE APP</h2>
-                <LoginField type={"text"} placeholder={"никнейм"}/>
-                <LoginField type={"email"} placeholder={"почта"}/>
-                <LoginField type={"password"} placeholder={"пароль"}/>
-                <LoginField type={"password"} placeholder={"повторите пароль"}/>
-                <Link to="/app">
-                    <AuthButton text={"Зарегистрироваться"}/>
-                </Link>
+                <input
+                    className={formcl.field}
+                    id="login"
+                    type={"text"}
+                    placeholder={"логин"}
+                    onChange={formik.handleChange}
+                    defaultValue={formik.values.login}
+                />
+                <input
+                    className={formcl.field}
+                    id="email"
+                    type="email"
+                    placeholder={"почта"}
+                    onChange={formik.handleChange}
+                    defaultValue={formik.values.email}
+                />
+                <input
+                    className={formcl.field}
+                    id="pass1"
+                    type={"password"}
+                    placeholder={"введите пароль"}
+                    onChange={formik.handleChange}
+                    defaultValue={formik.values.pass1}
+                />
+                <input
+                    className={formcl.field}
+                    id="pass2"
+                    type={"password"}
+                    placeholder={"повторите пароль"}
+                    onChange={formik.handleChange}
+                    defaultValue={formik.values.pass2}
+                />
+                <button className={authcl.auth} type={"submit"}>Зарегистрироваться</button>
                 <Link to="/login">
-                    <NewUser text={"Уже есть аккаунт?"}/>
+                    <button className={nusercl.new}>Уже есть аккаунт?</button>
                 </Link>
-
-            </div>
+            </form>
         </div>
     );
 }

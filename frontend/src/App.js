@@ -1,8 +1,8 @@
 import './App.css';
-import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import {Route, Switch} from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 function App() {
     return (
