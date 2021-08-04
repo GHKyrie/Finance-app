@@ -19,30 +19,30 @@ function SignupPage(props) {
         },
         onSubmit: values => {
             console.log(JSON.stringify(values, null, 4));
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "login": values.login,
+                "password": values.pass1,
+                "email": values.email,  
+                "mobile": "89867044909"
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:5001/registration", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(result + "_signup1"))
+                .catch(error => console.log('error', error));
         },
     });
-
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-        "login": formik.values.login,
-        "password": formik.values.pass1,
-        "email": formik.values.email,
-        "mobile": "89867044909"
-    });
-
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-    };
-
-    fetch("http://localhost:5001/registration", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
 
     const history = useHistory();
 

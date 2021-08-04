@@ -35,12 +35,34 @@ const formik = useFormik({
 
         fetch("http://localhost:5001/authorization", requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
+            .then(result => console.log(result + "_login1"))
             .catch(error => console.log('error', error));
     },
 });
 
 const history = useHistory();
+
+const request = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+        "email": "nemasterya@gmail.com",
+        "password": "kekmachineactivated"
+    });
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    fetch("http://localhost:5001/authorization", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result + "_login2"))
+        .catch(error => console.log('error', error));
+}
 
 const redirect = (e) => {
     e.preventDefault();
@@ -78,6 +100,7 @@ return (
             <Link to={"/signup"}>
                 <button className={nusercl.new}>Создать аккаунт</button>
             </Link>
+            <button onClick={request}></button>
         </form>
     </div>
 );
