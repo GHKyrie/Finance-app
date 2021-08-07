@@ -100,7 +100,6 @@ return (
             <Link to={"/signup"}>
                 <button className={nusercl.new}>Создать аккаунт</button>
             </Link>
-            <button onClick={request}></button>
         </form>
     </div>
 );

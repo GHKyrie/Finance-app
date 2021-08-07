@@ -22,7 +22,7 @@ const connection = mysql.createConnection({
 });
 
 connection.connect(err => {
-    if (err) throw error;
+    if (err) throw err;
     console.log("Успешно соединено с базой данных");
 });
 
@@ -96,7 +96,7 @@ app.post("/authorization", jsonParser, (req, res) => {
 
 });
 
-app.post("/transactions", jsonParser,(req, res) => {
+app.post("/addtransaction", jsonParser,(req, res) => {
 
     if(!req.body) return res.sendStatus(400);
 
@@ -116,7 +116,7 @@ app.post("/transactions", jsonParser,(req, res) => {
 
 });
 
-app.get("/transactions", jsonParser,  (req, res) => {
+app.post("/gettransactions", jsonParser,  (req, res) => {
     if (!req.body) return res.sendStatus(400);
 
     const uid = req.body.uid;

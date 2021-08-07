@@ -26,7 +26,7 @@ function SignupPage(props) {
             var raw = JSON.stringify({
                 "login": values.login,
                 "password": values.pass1,
-                "email": values.email,  
+                "email": values.email,
                 "mobile": "89867044909"
             });
 
