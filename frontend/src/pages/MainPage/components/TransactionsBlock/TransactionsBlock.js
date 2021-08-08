@@ -8,6 +8,8 @@ function TransactionsBlock(props) {
     let [price, setPrice] = useState();
     let [date, setDate] = useState();
 
+    let [data_, setData] = useState();
+
     const [hasLoaded, setHasLoaded] = useState();
 
     useEffect(() => {
@@ -33,21 +35,19 @@ function TransactionsBlock(props) {
             .then(response => response.text())
             .then(result => {
                 setHasLoaded(true);
+                setData(result);
 
                 data = JSON.parse(result);
 
-                text = setText(data[0].tag);
-                price = setPrice(data[0].amount);
-                date = setDate(data[0].datetime);
-
-                console.log(data);
-                console.warn(text);
-                console.warn(price);
-                console.warn(date);
+                setText(data[0].tag);
+                setPrice(data[0].amount);
+                setDate(data[0].datetime);
             })
+            .then(console.log(data_))
             .catch(error => console.log('error', error));
-    });
+    }, []);
 
+    // console.log(data_+'1');
 
     return hasLoaded ? (
         <div className={classes.transactionsBlock}>
