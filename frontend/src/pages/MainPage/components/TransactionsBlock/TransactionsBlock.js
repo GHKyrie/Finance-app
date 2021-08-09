@@ -11,11 +11,14 @@ function TransactionsBlock(props) {
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log(sessionStorage.uid + ' = uid');
+            
             const data = JSON.stringify({
-                "uid": "38",
+                "uid": sessionStorage.uid,
                 "begin": "2000-07-19 00:07:20",
                 "end": "2070-07-19 02:07:20"
             });
+
 
             const config = {
                 method: 'post',
@@ -23,7 +26,7 @@ function TransactionsBlock(props) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data : data
+                data: data
             };
 
             const result = await axios(config);
@@ -41,13 +44,13 @@ function TransactionsBlock(props) {
             <Fline/>
             {console.log(data)}
             {console.log(iter)}
-            { data.map( item => (
+            {data.map(item => (
                 <Transaction key={item.datetime}
-                    text={item.tag}
-                    price={item.amount}
-                    date={item.datetime}
+                             text={item.tag}
+                             price={item.amount}
+                             date={item.datetime}
                 />
-            ) )}
+            ))}
         </div>
     ) : <div className={classes.transactionsBlock}>Loading...</div>
 }
