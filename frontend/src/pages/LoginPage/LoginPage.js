@@ -7,8 +7,11 @@ import formcl from './components/LoginField.module.css';
 import showpasscl from './components/ShowPass.module.css';
 import authcl from '../SharedComponents/AuthButton.module.css';
 import nusercl from "./components/NewUser.module.css";
+import {useState} from "react";
 
 function LoginPage(props) {
+
+const [uid, setUid] = useState();
 
 const formik = useFormik({
     initialValues: {
@@ -16,17 +19,15 @@ const formik = useFormik({
         password: ''
     },
     onSubmit: values => {
-        console.log(JSON.stringify(values, null, 2));
+        const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
 
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({
+        const raw = JSON.stringify({
             "email": values.email,
             "password": values.password
         });
 
-        var requestOptions = {
+        const requestOptions = {
             method: 'POST',
             headers: myHeaders,
             body: raw,
@@ -35,34 +36,15 @@ const formik = useFormik({
 
         fetch("http://localhost:5001/authorization", requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result + "_login1"))
+            .then(result => {
+                console.log(result + "_login1")
+                setUid(result) // ошибка
+            })
             .catch(error => console.log('error', error));
     },
 });
 
 const history = useHistory();
-
-const request = () => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-        "email": "nemasterya@gmail.com",
-        "password": "kekmachineactivated"
-    });
-
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-    };
-
-    fetch("http://localhost:5001/authorization", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result + "_login2"))
-        .catch(error => console.log('error', error));
-}
 
 const redirect = (e) => {
     e.preventDefault();

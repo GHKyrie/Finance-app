@@ -86,8 +86,8 @@ app.post("/authorization", jsonParser, (req, res) => {
         else {
             //console.log(user);
             for (let i = 0; i < user.length; i++)
-                if (user[i].password == password)
-                    return res.sendStatus(200);
+                if (user[i].password == password) 
+                    return res.json(JSON.stringify(user[0].id));
                 else 
                     return res.sendStatus(400);
         }

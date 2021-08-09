@@ -2,66 +2,52 @@ import classes from "./TransactionsBlock.module.css";
 import Fline from "./Fline/Fline";
 import {useEffect, useState} from "react";
 import Transaction from "./Transaction/Transaction";
+import axios from "axios";
 
 function TransactionsBlock(props) {
-    let [text, setText] = useState();
-    let [price, setPrice] = useState();
-    let [date, setDate] = useState();
-
-    let [data_, setData] = useState();
-
+    const [data, setData] = useState();
     const [hasLoaded, setHasLoaded] = useState();
+    const [iter, setIter] = useState(0);
 
     useEffect(() => {
-        let data;
+        const fetchData = async () => {
+            const data = JSON.stringify({
+                "uid": "38",
+                "begin": "2000-07-19 00:07:20",
+                "end": "2070-07-19 02:07:20"
+            });
 
-        let myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+            const config = {
+                method: 'post',
+                url: 'http://localhost:5001/gettransactions',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data : data
+            };
 
-        let raw = JSON.stringify({
-            "uid": "38",
-            "begin": "1970-07-19 00:07:20",
-            "end": "2080-07-19 02:07:20"
-        });
+            const result = await axios(config);
 
-        const requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
+            setData(result.data);
+            setIter(iter + 1);
+            setHasLoaded(true);
         };
 
-        fetch("http://localhost:5001/gettransactions", requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                setHasLoaded(true);
-                setData(result);
-
-                data = JSON.parse(result);
-
-                setText(data[0].tag);
-                setPrice(data[0].amount);
-                setDate(data[0].datetime);
-            })
-            .then(console.log(data_))
-            .catch(error => console.log('error', error));
+        fetchData();
     }, []);
 
-    // console.log(data_+'1');
-
-    return hasLoaded ? (
+    return hasLoaded && iter > 0 ? (
         <div className={classes.transactionsBlock}>
             <Fline/>
-            <Transaction
-                text={text}
-                price={price}
-                date={date}
-            />
-            <Transaction
-                text={text}
-                price={price}
-                date={date}
-            />
+            {console.log(data)}
+            {console.log(iter)}
+            { data.map( item => (
+                <Transaction key={item.datetime}
+                    text={item.tag}
+                    price={item.amount}
+                    date={item.datetime}
+                />
+            ) )}
         </div>
     ) : <div className={classes.transactionsBlock}>Loading...</div>
 }
