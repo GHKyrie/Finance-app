@@ -7,7 +7,8 @@ import formcl from './components/LoginField.module.css';
 import showpasscl from './components/ShowPass.module.css';
 import authcl from '../SharedComponents/AuthButton.module.css';
 import nusercl from "./components/NewUser.module.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 function LoginPage(props) {
 
@@ -18,30 +19,53 @@ const formik = useFormik({
         email: '',
         password: ''
     },
+    // onSubmit: values => {
+    //     const myHeaders = new Headers();
+    //         myHeaders.append("Content-Type", "application/json");
+    //
+    //     const raw = JSON.stringify({
+    //         "email": values.email,
+    //         "password": values.password
+    //     });
+    //
+    //     const requestOptions = {
+    //         method: 'POST',
+    //         headers: myHeaders,
+    //         body: raw,
+    //         redirect: 'follow'
+    //     };
+    //
+    //     fetch("http://localhost:5001/authorization", requestOptions)
+    //         .then(response => response.text())
+    //         .then(result => {
+    //             console.log(result + "_login1")
+    //             setUid(result) // ошибка
+    //         })
+    //         .catch(error => console.log('error', error));
     onSubmit: values => {
-        const myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+        const fetchID = async () => {
+            const data = JSON.stringify({
+                "email": values.email,
+                "password": values.password
+            });
 
-        const raw = JSON.stringify({
-            "email": values.email,
-            "password": values.password
-        });
+            const config = {
+                method: 'post',
+                url: 'http://localhost:5001/authorization',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            };
 
-        const requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
+            const result = await axios(config);
 
-        fetch("http://localhost:5001/authorization", requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                console.log(result + "_login1")
-                setUid(result) // ошибка
-            })
-            .catch(error => console.log('error', error));
-    },
+            console.log(result.data + "_login")
+
+            setUid(result.data);
+        }
+        fetchID();
+    }
 });
 
 const history = useHistory();
@@ -49,6 +73,8 @@ const history = useHistory();
 const redirect = (e) => {
     e.preventDefault();
     formik.handleSubmit();
+
+    console.log(uid);
 
     const path = 'app';
     history.push(path);
