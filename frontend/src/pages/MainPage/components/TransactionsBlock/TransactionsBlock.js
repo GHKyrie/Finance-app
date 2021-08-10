@@ -12,13 +12,12 @@ function TransactionsBlock(props) {
     useEffect(() => {
         const fetchData = async () => {
             console.log(sessionStorage.uid + ' = uid');
-            
+
             const data = JSON.stringify({
                 "uid": sessionStorage.uid,
                 "begin": "2000-07-19 00:07:20",
                 "end": "2070-07-19 02:07:20"
             });
-
 
             const config = {
                 method: 'post',
@@ -34,9 +33,16 @@ function TransactionsBlock(props) {
             setData(result.data);
             setIter(iter + 1);
             setHasLoaded(true);
+
+            if (sessionStorage.reloads < 1) window.location.reload();
+                sessionStorage.reloads++;
         };
 
         fetchData();
+
+        // if (counter < 1) {window.location.reload() }
+        // counter++;
+        // console.log(counter);
     }, []);
 
     return hasLoaded && iter > 0 ? (
@@ -45,7 +51,7 @@ function TransactionsBlock(props) {
             {console.log(data)}
             {console.log(iter)}
             {data.map(item => (
-                <Transaction key={item.datetime}
+                <Transaction key={item.id}
                              text={item.tag}
                              price={item.amount}
                              date={item.datetime}

@@ -127,7 +127,7 @@ app.post("/gettransactions", jsonParser,  (req, res) => {
     console.log(begin);
     console.log(end);
 
-    connection.query("SELECT tag, exin, amount, datetime FROM transactions WHERE uid=? AND datetime>=? AND datetime<=?", [uid, begin, end], (err, results) => {
+    connection.query("SELECT id, tag, exin, amount, datetime FROM transactions WHERE uid=? AND datetime>=? AND datetime<=?", [uid, begin, end], (err, results) => {
         if (err)
             return console.error(err);
         else {
@@ -137,6 +137,7 @@ app.post("/gettransactions", jsonParser,  (req, res) => {
                     exin: el.exin,
                     amount: el.amount,
                     datetime: el.datetime,
+                    id: el.id,
                     uid: uid
                 }
             ));

@@ -7,7 +7,7 @@ import formcl from './components/LoginField.module.css';
 import showpasscl from './components/ShowPass.module.css';
 import authcl from '../SharedComponents/AuthButton.module.css';
 import nusercl from "./components/NewUser.module.css";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import axios from "axios";
 
 function LoginPage(props) {
@@ -48,7 +48,10 @@ const formik = useFormik({
             console.log(result.data + "_login")
 
             sessionStorage.uid = result.data;
+            sessionStorage.reloads = 0;
+
             console.log(sessionStorage.uid);
+            console.log(sessionStorage.reloads + "_reloads1");
 
             setUid(result.data);
         }
