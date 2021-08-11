@@ -7,7 +7,6 @@ import formcl from './components/LoginField.module.css';
 import showpasscl from './components/ShowPass.module.css';
 import authcl from '../SharedComponents/AuthButton.module.css';
 import nusercl from "./components/NewUser.module.css";
-import {useState} from "react";
 import axios from "axios";
 
 function LoginPage(props) {
@@ -20,8 +19,6 @@ const redirect = (e) => {
     const path = 'app';
     history.push(path);
 };
-
-const [uid, setUid] = useState();
 
 const formik = useFormik({
     initialValues: {
@@ -48,8 +45,6 @@ const formik = useFormik({
 
             sessionStorage.uid = result.data;
             sessionStorage.reloads = 0;
-
-            setUid(result.data);
         }
         fetchID();
     }
