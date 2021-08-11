@@ -18,7 +18,7 @@ const redirect = (e) => {
     formik.handleSubmit();
 
     const path = 'app';
-    setTimeout(history.push(path), 700)
+    history.push(path);
 };
 
 const [uid, setUid] = useState();
@@ -45,13 +45,9 @@ const formik = useFormik({
             };
 
             const result = await axios(config);
-            console.log(result.data + "_login")
 
             sessionStorage.uid = result.data;
             sessionStorage.reloads = 0;
-
-            console.log(sessionStorage.uid);
-            console.log(sessionStorage.reloads + "_reloads1");
 
             setUid(result.data);
         }

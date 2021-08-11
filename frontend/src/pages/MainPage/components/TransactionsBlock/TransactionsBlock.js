@@ -11,12 +11,10 @@ function TransactionsBlock(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log(sessionStorage.uid + ' = uid');
-
             const data = JSON.stringify({
                 "uid": sessionStorage.uid,
                 "begin": "2000-07-19 00:07:20",
-                "end": "2070-07-19 02:07:20"
+                "end": "2070-07-20 02:07:20"
             });
 
             const config = {
@@ -39,21 +37,15 @@ function TransactionsBlock(props) {
         };
 
         fetchData();
-
-        // if (counter < 1) {window.location.reload() }
-        // counter++;
-        // console.log(counter);
     }, []);
 
     return hasLoaded && iter > 0 ? (
         <div className={classes.transactionsBlock}>
             <Fline/>
-            {console.log(data)}
-            {console.log(iter)}
             {data.map(item => (
                 <Transaction key={item.id}
                              text={item.tag}
-                             price={item.amount}
+                             price={'-₽ ' + item.amount}
                              date={item.datetime}
                 />
             ))}
