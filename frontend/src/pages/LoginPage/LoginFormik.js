@@ -6,10 +6,26 @@ import acl from "../SharedComponents/AuthButton.module.css";
 import cl from "../SharedComponents/AuthForm.module.css";
 import nusercl from "./components/NewUser.module.css";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
-async function fetchData(a, b) {
-    await new Promise((r) => setTimeout(r, 500));
-    return `textA: ${a}, textB: ${b}`;
+const setID = async values => {
+    const data = JSON.stringify({
+        "email": values.email,
+        "password": values.password
+    });
+
+    const config = {
+        method: 'post',
+        url: 'http://localhost:5001/authorization',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: data
+    };
+
+    const result = await axios(config);
+
+    console.log(result);
 }
 
 const validate = values => {
@@ -36,7 +52,7 @@ function LoginFormik(props) {
             initialValues={{email: '', password: ''}}
             validate={validate}
             onSubmit={async (values, {setSubmitting}) => {
-                await new Promise((r) => setTimeout(r, 5));
+                await setID(values);
                 console.log(JSON.stringify(values, null, 2));
                 setSubmitting(false);
             }}
