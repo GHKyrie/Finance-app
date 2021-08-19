@@ -16,3 +16,10 @@
 .field:hover{
     border-bottom: 2px solid white;
 }
+
+.error{
+    border-bottom: 2px solid red;
+}
+.success{
+    border-bottom: 2px solid limegreen;
+}

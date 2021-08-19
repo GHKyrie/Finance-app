@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
+var val_;
+
 const Pie = props => {
     const ref = useRef(null);
     const createPie = d3
@@ -41,12 +43,24 @@ const Pie = props => {
                 .merge(groupWithData.select("text"));
 
             text
-                .attr("text-anchor", "middle")
+                .attr("text-anchor", "left")
                 .attr("alignment-baseline", "middle")
                 .attr("transform", d => `translate(${createArc.centroid(d)})`)
                 .style("fill", "white")
                 .style("font-size", 10)
-                .text(d => format(d.value));
+                .text(d => format(d.value))
+
+            const text_ = groupWithUpdate
+                .append("text")
+                .merge(groupWithData.select("text"));
+
+            text_
+                .attr("text-anchor", "right")
+                .attr("alignment-baseline", "middle")
+                .attr("transform", d => `translate(${createArc.centroid(d)})`)
+                .style("fill", "white")
+                .style("font-size", 15)
+                .text(d => d.data.text)
         },
         [props.data]
     );

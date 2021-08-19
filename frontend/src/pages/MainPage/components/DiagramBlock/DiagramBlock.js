@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 
 const generateData = (data) => (
     data.map(item => ({
-        date: item.tag,
+        text: item.tag,
         value: item.amount
     }))
 )
@@ -24,10 +24,10 @@ function DiagramBlock(props) {
             <div className={classes.diagram}>
                 <Pie
                     data={data}
-                    width={200}
-                    height={200}
+                    width={300}
+                    height={300}
                     innerRadius={0}
-                    outerRadius={120}
+                    outerRadius={150}
                 />
             </div>
             <Total/>
