@@ -7,6 +7,11 @@ import cl from "../SharedComponents/AuthForm.module.css";
 import nusercl from "./components/NewUser.module.css";
 import {Link} from "react-router-dom";
 
+async function fetchData(a, b) {
+    await new Promise((r) => setTimeout(r, 500));
+    return `textA: ${a}, textB: ${b}`;
+}
+
 const validate = values => {
     const errors = {};
 
@@ -26,82 +31,41 @@ const validate = values => {
 }
 
 function LoginFormik(props) {
-    const formik = useFormik({
-        initialValues: {
-            email: '',
-            password: ''
-        },
-        validate,
-        onSubmit: values => {
-            console.log(JSON.stringify(values, null, 2));
-        }
-    });
-
     return (
         <Formik
             initialValues={{email: '', password: ''}}
             validate={validate}
-            onSubmit={(values, {setSubmitting}) => {
+            onSubmit={async (values, {setSubmitting}) => {
+                await new Promise((r) => setTimeout(r, 5));
                 console.log(JSON.stringify(values, null, 2));
                 setSubmitting(false);
             }}
         >
-            {/*{formik => (*/}
-            {/*    <div className={wcl.wrapper}>*/}
-            {/*        <form onSubmit={formik.handleSubmit} className={cl.authForm}>*/}
-            {/*            <h2>FINANCE APP</h2>*/}
-            {/*            <input*/}
-            {/*                className={fcl.field}*/}
-            {/*                id="email"*/}
-            {/*                type="email"*/}
-            {/*                placeholder={"почта"}*/}
-            {/*                {...formik.getFieldProps('email')}*/}
-            {/*            />*/}
-            {/*            {formik.touched.email && formik.errors.email ? (*/}
-            {/*                <div>{formik.errors.email}</div>*/}
-            {/*            ) : null}*/}
-            {/*            <input*/}
-            {/*                className={fcl.field}*/}
-            {/*                id="password"*/}
-            {/*                type="password"*/}
-            {/*                placeholder={"пароль"}*/}
-            {/*                {...formik.getFieldProps('password')}*/}
-            {/*            />*/}
-            {/*            {formik.touched.password && formik.errors.password ? (*/}
-            {/*                <div>{formik.errors.password}</div>*/}
-            {/*            ) : null}*/}
-            {/*            <button className={acl.auth} type="submit">Авторизоваться</button>*/}
-            {/*            <Link to={"/signup"}>*/}
-            {/*                <button className={nusercl.new}>Создать аккаунт</button>*/}
-            {/*            </Link>*/}
-            {/*        </form>*/}
-            {/*    </div>*/}
-            {/*)}*/}
             <div className={wcl.wrapper}>
                 <Form className={cl.authForm}>
                     <h2>FINANCE APP</h2>
 
                     <Field className={fcl.field}
-                        name="email"
-                        placeholder="Почта"
-                        type="email"
+                           name="email"
+                           placeholder="Почта"
+                           type="email"
                     />
                     <ErrorMessage name="email"/>
 
                     <Field className={fcl.field}
-                        name="password"
-                        placeholder="Пароль"
-                        type="password"
+                           name="password"
+                           placeholder="Пароль"
+                           type="password"
                     />
                     <ErrorMessage name="password"/>
 
                     <button className={acl.auth} type="submit">Авторизоваться</button>
+
                     <Link to={"/signup"}>
                         <button className={nusercl.new}>Создать аккаунт</button>
                     </Link>
                 </Form>
             </div>
-
         </Formik>
     );
 }
