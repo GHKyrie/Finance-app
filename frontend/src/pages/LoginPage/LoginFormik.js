@@ -1,4 +1,4 @@
-import {Formik, useFormik} from "formik";
+import {ErrorMessage, Field, Form, Formik, useFormik} from "formik";
 import * as React from "react";
 import wcl from '../../shared/Wrapper.module.css';
 import fcl from "./components/LoginField.module.css";
@@ -46,37 +46,62 @@ function LoginFormik(props) {
                 setSubmitting(false);
             }}
         >
-            {formik => (
-                <div className={wcl.wrapper}>
-                    <form onSubmit={formik.handleSubmit} className={cl.authForm}>
-                        <h2>FINANCE APP</h2>
-                        <input
-                            className={fcl.field}
-                            id="email"
-                            type="email"
-                            placeholder={"почта"}
-                            {...formik.getFieldProps('email')}
-                        />
-                        {formik.touched.email && formik.errors.email ? (
-                            <div>{formik.errors.email}</div>
-                        ) : null}
-                        <input
-                            className={fcl.field}
-                            id="password"
-                            type="password"
-                            placeholder={"пароль"}
-                            {...formik.getFieldProps('password')}
-                        />
-                        {formik.touched.password && formik.errors.password ? (
-                            <div>{formik.errors.password}</div>
-                        ) : null}
-                        <button className={acl.auth} type="submit">Авторизоваться</button>
-                        <Link to={"/signup"}>
-                            <button className={nusercl.new}>Создать аккаунт</button>
-                        </Link>
-                    </form>
-                </div>
-            )}
+            {/*{formik => (*/}
+            {/*    <div className={wcl.wrapper}>*/}
+            {/*        <form onSubmit={formik.handleSubmit} className={cl.authForm}>*/}
+            {/*            <h2>FINANCE APP</h2>*/}
+            {/*            <input*/}
+            {/*                className={fcl.field}*/}
+            {/*                id="email"*/}
+            {/*                type="email"*/}
+            {/*                placeholder={"почта"}*/}
+            {/*                {...formik.getFieldProps('email')}*/}
+            {/*            />*/}
+            {/*            {formik.touched.email && formik.errors.email ? (*/}
+            {/*                <div>{formik.errors.email}</div>*/}
+            {/*            ) : null}*/}
+            {/*            <input*/}
+            {/*                className={fcl.field}*/}
+            {/*                id="password"*/}
+            {/*                type="password"*/}
+            {/*                placeholder={"пароль"}*/}
+            {/*                {...formik.getFieldProps('password')}*/}
+            {/*            />*/}
+            {/*            {formik.touched.password && formik.errors.password ? (*/}
+            {/*                <div>{formik.errors.password}</div>*/}
+            {/*            ) : null}*/}
+            {/*            <button className={acl.auth} type="submit">Авторизоваться</button>*/}
+            {/*            <Link to={"/signup"}>*/}
+            {/*                <button className={nusercl.new}>Создать аккаунт</button>*/}
+            {/*            </Link>*/}
+            {/*        </form>*/}
+            {/*    </div>*/}
+            {/*)}*/}
+            <div className={wcl.wrapper}>
+                <Form className={cl.authForm}>
+                    <h2>FINANCE APP</h2>
+
+                    <Field className={fcl.field}
+                        name="email"
+                        placeholder="Почта"
+                        type="email"
+                    />
+                    <ErrorMessage name="email"/>
+
+                    <Field className={fcl.field}
+                        name="password"
+                        placeholder="Пароль"
+                        type="password"
+                    />
+                    <ErrorMessage name="password"/>
+
+                    <button className={acl.auth} type="submit">Авторизоваться</button>
+                    <Link to={"/signup"}>
+                        <button className={nusercl.new}>Создать аккаунт</button>
+                    </Link>
+                </Form>
+            </div>
+
         </Formik>
     );
 }
