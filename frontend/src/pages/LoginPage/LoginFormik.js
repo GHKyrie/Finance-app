@@ -5,8 +5,9 @@ import fcl from "./components/LoginField.module.css";
 import acl from "../SharedComponents/AuthButton.module.css";
 import cl from "../SharedComponents/AuthForm.module.css";
 import nusercl from "./components/NewUser.module.css";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
+import {useState} from "react";
 
 const setID = async values => {
     const data = JSON.stringify({
@@ -25,7 +26,7 @@ const setID = async values => {
 
     const result = await axios(config);
 
-    console.log(result);
+    return result;
 }
 
 const validate = values => {
@@ -47,14 +48,20 @@ const validate = values => {
 }
 
 function LoginFormik(props) {
+    const history = useHistory();
+
     return (
         <Formik
             initialValues={{email: '', password: ''}}
             validate={validate}
             onSubmit={async (values, {setSubmitting}) => {
-                await setID(values);
-                console.log(JSON.stringify(values, null, 2));
+                sessionStorage.uid = undefined;
+                const res = await setID(values);
+                sessionStorage.uid = res.data;
                 setSubmitting(false);
+
+                if (sessionStorage.uid && res.status == "200")
+                    history.push("/app");
             }}
         >
             <div className={wcl.wrapper}>
