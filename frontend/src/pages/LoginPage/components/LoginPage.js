@@ -1,10 +1,10 @@
 import {ErrorMessage, Field, Form, Formik, useFormik} from "formik";
 import * as React from "react";
-import wcl from '../../shared/Wrapper.module.css';
-import fcl from "./components/LoginField.module.css";
-import acl from "../SharedComponents/AuthButton.module.css";
-import cl from "../SharedComponents/AuthForm.module.css";
-import nusercl from "./components/NewUser.module.css";
+import wcl from '../../../shared/Wrapper.module.css';
+import fcl from "./LoginField.module.css";
+import acl from "../../SharedComponents/AuthButton.module.css";
+import cl from "../../SharedComponents/AuthForm.module.css";
+import nusercl from "./NewUser.module.css";
 import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
 
@@ -49,7 +49,7 @@ const validate = values => {
     return errors;
 }
 
-function LoginFormik(props) {
+function LoginPage(props) {
     const history = useHistory();
 
     return (
@@ -57,6 +57,7 @@ function LoginFormik(props) {
             initialValues={{email: '', password: ''}}
             validate={validate}
             onSubmit={async (values, {setSubmitting}) => {
+                const btn = document.getElementsByClassName(acl.auth)[0];
                 sessionStorage.uid = undefined;
 
                 try {
@@ -68,7 +69,6 @@ function LoginFormik(props) {
                         history.push("/app");
 
                 } catch (e) {
-                    const btn = document.getElementsByClassName(acl.auth)[0];
                     btn.innerText = "Ошибка авторизации";
                 }
 
@@ -83,6 +83,7 @@ function LoginFormik(props) {
                            name="email"
                            placeholder="Почта"
                            type="email"
+                           autoComplete="off"
                     />
                     <ErrorMessage name="email"/>
 
@@ -90,6 +91,7 @@ function LoginFormik(props) {
                            name="password"
                            placeholder="Пароль"
                            type="password"
+                           autoComplete="off"
                     />
                     <ErrorMessage name="password"/>
 
@@ -104,4 +106,4 @@ function LoginFormik(props) {
     );
 }
 
-export default LoginFormik;
+export default LoginPage;

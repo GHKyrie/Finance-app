@@ -8,6 +8,9 @@
     width: 300px;
     padding: 20px 20px;
 }
+.regForm{
+    height: 370px;
+}
 .authForm h2{
     font-size: 22px;
     text-align: center;

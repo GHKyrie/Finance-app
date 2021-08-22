@@ -33,15 +33,14 @@ app.post("/registration", jsonParser, (req, res) => {
     const login = req.body.login;
     const password = req.body.password;
     const email = req.body.email;
-    const mobile = req.body.mobile;
-
+    
     connection.query("SELECT * FROM users", (err, results) => {
         if (err) return console.error(err);
 
         const users = results;
         let k = 0;
 
-        if (users == {}) connection.query("INSERT INTO users (login, password, email, mobile) VALUES (?,?,?,?)", [login, password, email, mobile], (err, results) => {
+        if (users == {}) connection.query("INSERT INTO users (login, password, email) VALUES (?,?,?)", [login, password, email], (err, results) => {
             if (err) return console.error(err);
             else console.log("Данные добавлены");
         });
@@ -55,7 +54,7 @@ app.post("/registration", jsonParser, (req, res) => {
                 console.error("Wrong data");
                 return res.sendStatus(406);
             }
-            else connection.query("INSERT INTO users (login, password, email, mobile) VALUES (?,?,?,?)", [login, password, email, mobile], function (err, results) {
+            else connection.query("INSERT INTO users (login, password, email) VALUES (?,?,?)", [login, password, email], function (err, results) {
                 if (err) return console.error(err);
                 else {
                     console.log("Данные добавлены");
