@@ -10,7 +10,6 @@ function MainPage(props) {
 
     const [data, setData] = useState();
     const [hasLoaded, setHasLoaded] = useState();
-    const [iter, setIter] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,17 +31,13 @@ function MainPage(props) {
             const result = await axios(config);
 
             setData(result.data);
-            setIter(iter + 1);
             setHasLoaded(true);
-
-            if (sessionStorage.reloads < 1) window.location.reload();
-                sessionStorage.reloads++;
         };
 
         fetchData();
-    }, [iter]);
+    }, []);
 
-    return hasLoaded && iter > 0 ? (
+    return hasLoaded ? (
         <div className={cl1.wrapper}>
             <div className={classes.page}>
                 <h1>Finance App</h1>

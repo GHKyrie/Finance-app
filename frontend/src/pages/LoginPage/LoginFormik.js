@@ -7,7 +7,6 @@ import cl from "../SharedComponents/AuthForm.module.css";
 import nusercl from "./components/NewUser.module.css";
 import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
-import {useState} from "react";
 
 const setID = async values => {
     const data = JSON.stringify({
@@ -31,6 +30,9 @@ const setID = async values => {
 
 const validate = values => {
     const errors = {};
+
+    const btn = document.getElementsByClassName(acl.auth)[0];
+    btn.innerText = "Авторизоваться";
 
     if (!values.email) {
         errors.email = 'Ввод обязателен';
@@ -56,12 +58,21 @@ function LoginFormik(props) {
             validate={validate}
             onSubmit={async (values, {setSubmitting}) => {
                 sessionStorage.uid = undefined;
-                const res = await setID(values);
-                sessionStorage.uid = res.data;
-                setSubmitting(false);
 
-                if (sessionStorage.uid && res.status == "200")
-                    history.push("/app");
+                try {
+                    const res = await setID(values);
+
+                    sessionStorage.uid = res.data;
+
+                    if (sessionStorage.uid && res.status == "200")
+                        history.push("/app");
+
+                } catch (e) {
+                    const btn = document.getElementsByClassName(acl.auth)[0];
+                    btn.innerText = "Ошибка авторизации";
+                }
+
+                setSubmitting(false);
             }}
         >
             <div className={wcl.wrapper}>
