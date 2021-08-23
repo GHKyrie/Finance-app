@@ -1,101 +1,136 @@
-import "./SignupPage.module.css";
-import cl2 from "../SharedComponents/AuthForm.module.css";
-import cl1 from '../../shared/Wrapper.module.css';
-import {Link, useHistory} from "react-router-dom";
-import formcl from "../LoginPage/components/LoginField.module.css";
+import {ErrorMessage, Field, Form, Formik, useFormik} from "formik";
 import * as React from "react";
-import {useFormik} from "formik";
-import authcl from "../SharedComponents/AuthButton.module.css";
+import wcl from '../../shared/Wrapper.module.css';
+import fcl from "../LoginPage/components/LoginField.module.css";
+import acl from "../SharedComponents/AuthButton.module.css";
+import cl from "../SharedComponents/AuthForm.module.css";
 import nusercl from "../LoginPage/components/NewUser.module.css";
+import {Link, useHistory} from "react-router-dom";
+import axios from "axios";
 
-function SignupPage(props) {
-
-    const formik = useFormik({
-        initialValues: {
-            login: '',
-            email: '',
-            pass1: '',
-            pass2: ''
-        },
-        onSubmit: values => {
-            console.log(JSON.stringify(values, null, 4));
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-
-            var raw = JSON.stringify({
-                "login": values.login,
-                "password": values.pass1,
-                "email": values.email,
-                "mobile": "89867044909"
-            });
-
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            fetch("http://localhost:5001/registration", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result + "_signup1"))
-                .catch(error => console.log('error', error));
-        },
+const regreq = async values => {
+    const data = JSON.stringify({
+        "login": values.login,
+        "password": values.password,
+        "email": values.email
     });
 
-    const history = useHistory();
-
-    const redirect = (e) => {
-        e.preventDefault();
-        formik.handleSubmit();
-
-        const path = 'app';
-        history.push(path);
+    const config = {
+        method: 'post',
+        url: 'http://localhost:5001/registration',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: data
     };
 
+    const result = await axios(config);
+
+    return result;
+}
+
+const validate = values => {
+    const errors = {};
+
+    const btn = document.getElementsByClassName(acl.auth)[0];
+    btn.innerText = "Зарегистрироваться";
+
+    if (!values.login) {
+        errors.login = 'Ввод обязателен';
+    } else if (values.login.length > 20) {
+        errors.login = 'Логин должен быть не длиннее 20 символов';
+    }
+
+    if (!values.email) {
+        errors.email = 'Ввод обязателен';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Неверный формат почты';
+    }
+
+    if (!values.password) {
+        errors.password = 'Ввод обязателен';
+    } else if (values.password.length > 20) {
+        errors.password = 'Пароль должен быть не длиннее 20 символов';
+    }
+
+    if (!values.confpass) {
+        errors.confpass = 'Ввод обязателен';
+    } else if (values.confpass != values.password) {
+        errors.confpass = 'Пароли должны совпадать';
+    }
+
+    return errors;
+}
+
+function SignupPage(props) {
+    const history = useHistory();
+
     return (
-        <div className={cl1.wrapper}>
-            <form className={cl2.authForm} onSubmit={redirect}>
-                <h2>FINANCE APP</h2>
-                <input
-                    className={formcl.field}
-                    id="login"
-                    type={"text"}
-                    placeholder={"логин"}
-                    onChange={formik.handleChange}
-                    defaultValue={formik.values.login}
-                />
-                <input
-                    className={formcl.field}
-                    id="email"
-                    type="email"
-                    placeholder={"почта"}
-                    onChange={formik.handleChange}
-                    defaultValue={formik.values.email}
-                />
-                <input
-                    className={formcl.field}
-                    id="pass1"
-                    type={"password"}
-                    placeholder={"введите пароль"}
-                    onChange={formik.handleChange}
-                    defaultValue={formik.values.pass1}
-                />
-                <input
-                    className={formcl.field}
-                    id="pass2"
-                    type={"password"}
-                    placeholder={"повторите пароль"}
-                    onChange={formik.handleChange}
-                    defaultValue={formik.values.pass2}
-                />
-                <button className={authcl.auth} type={"submit"}>Зарегистрироваться</button>
-                <Link to="/login">
-                    <button className={nusercl.new}>Уже есть аккаунт?</button>
-                </Link>
-            </form>
-        </div>
+        <Formik
+            initialValues={{login: '', email: '', password: '', confpass: ''}}
+            validate={validate}
+            onSubmit={async (values, {setSubmitting}) => {
+                const btn = document.getElementsByClassName(acl.auth)[0];
+
+                try {
+                    const res = await regreq(values);
+
+                    if (res.status == "200")
+                    {
+                        btn.innerText = "Подождите немного...";
+                        setTimeout(() => { history.push("/login") }, 500);
+                    }
+                } catch (e) {
+                    btn.innerText = "Ошибка регистрации";
+                }
+
+                setSubmitting(false);
+            }}
+        >
+            <div className={wcl.wrapper}>
+                <Form className={cl.authForm + " " + cl.regForm}>
+                    <h2>FINANCE APP</h2>
+
+                    <Field className={fcl.field}
+                           name="login"
+                           placeholder="Логин"
+                           type="text"
+                           autoComplete="off"
+                    />
+                    <ErrorMessage name="login"/>
+
+                    <Field className={fcl.field}
+                           name="email"
+                           placeholder="Почта"
+                           type="email"
+                           autoComplete="off"
+                    />
+                    <ErrorMessage name="email"/>
+
+                    <Field className={fcl.field}
+                           name="password"
+                           placeholder="Пароль"
+                           type="password"
+                           autoComplete="off"
+                    />
+                    <ErrorMessage name="password"/>
+
+                    <Field className={fcl.field}
+                           name="confpass"
+                           placeholder="Повторите пароль"
+                           type="password"
+                           autoComplete="off"
+                    />
+                    <ErrorMessage name="confpass"/>
+
+                    <button className={acl.auth} type="submit">Зарегистрироваться</button>
+
+                    <Link to={"/login"}>
+                        <button className={nusercl.new}>Уже есть аккаунт?</button>
+                    </Link>
+                </Form>
+            </div>
+        </Formik>
     );
 }
 

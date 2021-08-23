@@ -1,23 +1,22 @@
 import {ErrorMessage, Field, Form, Formik, useFormik} from "formik";
 import * as React from "react";
 import wcl from '../../shared/Wrapper.module.css';
-import fcl from "../LoginPage/components/LoginField.module.css";
+import fcl from "./components/LoginField.module.css";
 import acl from "../SharedComponents/AuthButton.module.css";
 import cl from "../SharedComponents/AuthForm.module.css";
-import nusercl from "../LoginPage/components/NewUser.module.css";
+import nusercl from "./components/NewUser.module.css";
 import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
 
-const regreq = async values => {
+const setID = async values => {
     const data = JSON.stringify({
-        "login": values.login,
-        "password": values.password,
-        "email": values.email
+        "email": values.email,
+        "password": values.password
     });
 
     const config = {
         method: 'post',
-        url: 'http://localhost:5001/registration',
+        url: 'http://localhost:5001/authorization',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -33,13 +32,7 @@ const validate = values => {
     const errors = {};
 
     const btn = document.getElementsByClassName(acl.auth)[0];
-    btn.innerText = "Зарегистрироваться";
-
-    if (!values.login) {
-        errors.login = 'Ввод обязателен';
-    } else if (values.login.length > 20) {
-        errors.login = 'Логин должен быть не длиннее 20 символов';
-    }
+    btn.innerText = "Авторизоваться";
 
     if (!values.email) {
         errors.email = 'Ввод обязателен';
@@ -53,51 +46,38 @@ const validate = values => {
         errors.password = 'Пароль должен быть не длиннее 20 символов';
     }
 
-    if (!values.confpass) {
-        errors.confpass = 'Ввод обязателен';
-    } else if (values.confpass != values.password) {
-        errors.confpass = 'Пароли должны совпадать';
-    }
-
     return errors;
 }
 
-function SignupPageFormik(props) {
+function LoginPage(props) {
     const history = useHistory();
 
     return (
         <Formik
-            initialValues={{login: '', email: '', password: '', confpass: ''}}
+            initialValues={{email: '', password: ''}}
             validate={validate}
             onSubmit={async (values, {setSubmitting}) => {
                 const btn = document.getElementsByClassName(acl.auth)[0];
+                sessionStorage.uid = undefined;
 
                 try {
-                    const res = await regreq(values);
+                    const res = await setID(values);
 
-                    if (res.status == "200")
-                    {
-                        btn.innerText = "Подождите немного...";
-                        setTimeout(() => { history.push("/login") }, 500);
-                    }
+                    sessionStorage.uid = res.data;
+
+                    if (sessionStorage.uid && res.status == "200")
+                        history.push("/app");
+
                 } catch (e) {
-                    btn.innerText = "Ошибка регистрации";
+                    btn.innerText = "Ошибка авторизации";
                 }
 
                 setSubmitting(false);
             }}
         >
             <div className={wcl.wrapper}>
-                <Form className={cl.authForm + " " + cl.regForm}>
+                <Form className={cl.authForm}>
                     <h2>FINANCE APP</h2>
-
-                    <Field className={fcl.field}
-                           name="login"
-                           placeholder="Логин"
-                           type="text"
-                           autoComplete="off"
-                    />
-                    <ErrorMessage name="login"/>
 
                     <Field className={fcl.field}
                            name="email"
@@ -115,18 +95,10 @@ function SignupPageFormik(props) {
                     />
                     <ErrorMessage name="password"/>
 
-                    <Field className={fcl.field}
-                           name="confpass"
-                           placeholder="Повторите пароль"
-                           type="password"
-                           autoComplete="off"
-                    />
-                    <ErrorMessage name="confpass"/>
-
-                    <button className={acl.auth} type="submit">Зарегистрироваться</button>
+                    <button className={acl.auth} type="submit">Авторизоваться</button>
 
                     <Link to={"/signup"}>
-                        <button className={nusercl.new}>Уже есть аккаунт?</button>
+                        <button className={nusercl.new}>Создать аккаунт</button>
                     </Link>
                 </Form>
             </div>
@@ -134,4 +106,4 @@ function SignupPageFormik(props) {
     );
 }
 
-export default SignupPageFormik;
+export default LoginPage;

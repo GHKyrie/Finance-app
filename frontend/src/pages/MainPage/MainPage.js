@@ -42,9 +42,9 @@ function MainPage(props) {
             <div className={classes.page}>
                 <h1>Finance App</h1>
                 <DiagramBlock data={data} />
-                <TransactionsBlock data={data} />
                 <Menu />
             </div>
+            <TransactionsBlock data={data} />
         </div>
     ) : <div className={classes.transactionsBlock}>Loading...</div>
 }
