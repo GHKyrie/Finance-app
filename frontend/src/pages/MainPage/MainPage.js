@@ -1,5 +1,5 @@
 import cl1 from '../../shared/Wrapper.module.css';
-import classes from "./MainPage.module.css";
+import cls from "./MainPage.module.css";
 import Menu from "./components/Menu/Menu";
 import TransactionsBlock from "./components/TransactionsBlock/TransactionsBlock";
 import DiagramBlock from "./components/DiagramBlock/DiagramBlock";
@@ -39,14 +39,14 @@ function MainPage(props) {
 
     return hasLoaded ? (
         <div className={cl1.wrapper}>
-            <div className={classes.page}>
+            <div className={cls.page}>
                 <h1>Finance App</h1>
                 <DiagramBlock data={data} />
                 <Menu />
             </div>
             <TransactionsBlock data={data} />
         </div>
-    ) : <div className={classes.transactionsBlock}>Loading...</div>
+    ) : <div className={cls.transactionsBlock}>Loading...</div>
 }
 
 export default MainPage;
