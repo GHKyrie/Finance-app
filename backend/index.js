@@ -121,12 +121,33 @@ app.post("/gettransactions", jsonParser,  (req, res) => {
     const uid = req.body.uid;
     const begin = req.body.begin;
     const end = req.body.end;
-    console.log(req.body);
-    console.log(uid);
-    console.log(begin);
-    console.log(end);
 
     connection.query("SELECT id, tag, exin, amount, datetime FROM transactions WHERE uid=? AND datetime>=? AND datetime<=?", [uid, begin, end], (err, results) => {
+        if (err)
+            return console.error(err);
+        else {
+            const transaction = results.map((el) => (
+                {
+                    tag: el.tag,
+                    exin: el.exin,
+                    amount: el.amount,
+                    datetime: el.datetime,
+                    id: el.id,
+                    uid: uid
+                }
+            ));
+            return res.json(transaction);
+        }
+    });
+});
+
+app.post("/gettransactionsinit", jsonParser,  (req, res) => {
+    if (!req.body) return res.sendStatus(400);
+
+    const uid = req.body.uid;
+    const num = 3;
+
+    connection.query("SELECT id, tag, exin, amount, datetime FROM transactions WHERE uid=? ORDER BY id DESC limit ?", [uid, num], (err, results) => {
         if (err)
             return console.error(err);
         else {

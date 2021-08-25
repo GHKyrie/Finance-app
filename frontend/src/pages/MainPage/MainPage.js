@@ -15,13 +15,14 @@ function MainPage(props) {
         const fetchData = async () => {
             const data = JSON.stringify({
                 "uid": sessionStorage.uid,
-                "begin": "2000-07-19 00:07:20",
-                "end": "2070-07-20 02:07:20"
+                // "begin": "2000-07-19 00:07:20",
+                // "end": "2070-07-20 02:07:20"
             });
 
             const config = {
                 method: 'post',
-                url: 'http://localhost:5001/gettransactions',
+                // url: 'http://localhost:5001/gettransactions',
+                url: 'http://localhost:5001/gettransactionsinit',
                 headers: {
                     'Content-Type': 'application/json'
                 },
