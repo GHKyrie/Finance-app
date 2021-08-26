@@ -38,17 +38,17 @@ const Pie = props => {
                 .attr("d", createArc)
                 .attr("fill", (d, i) => colors(i));
 
-            const text = groupWithUpdate
-                .append("text")
-                .merge(groupWithData.select("text"));
-
-            text
-                .attr("text-anchor", "left")
-                .attr("alignment-baseline", "middle")
-                .attr("transform", d => `translate(${createArc.centroid(d)})`)
-                .style("fill", "white")
-                .style("font-size", 10)
-                .text(d => format(d.value))
+            // const text = groupWithUpdate
+            //     .append("text")
+            //     .merge(groupWithData.select("text"));
+            //
+            // text
+            //     .attr("text-anchor", "left")
+            //     .attr("alignment-baseline", "middle")
+            //     .attr("transform", d => `translate(${createArc.centroid(d)})`)
+            //     .style("fill", "white")
+            //     .style("font-size", 10)
+            //     .text(d => format(d.value))
 
             const text_ = groupWithUpdate
                 .append("text")
@@ -59,7 +59,7 @@ const Pie = props => {
                 .attr("alignment-baseline", "middle")
                 .attr("transform", d => `translate(${createArc.centroid(d)})`)
                 .style("fill", "white")
-                .style("font-size", 15)
+                .style("font-size", 12)
                 .text(d => d.data.text)
         },
         [props.data]

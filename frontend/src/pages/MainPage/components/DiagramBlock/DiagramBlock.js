@@ -24,10 +24,10 @@ function DiagramBlock(props) {
             <div className={classes.diagram}>
                 <Pie
                     data={data}
-                    width={300}
-                    height={300}
+                    width={400}
+                    height={400}
                     innerRadius={0}
-                    outerRadius={150}
+                    outerRadius={200}
                 />
             </div>
             <Total/>

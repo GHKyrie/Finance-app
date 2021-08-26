@@ -10,3 +10,8 @@
 .auth:hover{
     background: red;
 }
+.lone{
+    padding: 5px 15px;
+    margin-top: 10px;
+    width: 100%;
+}
