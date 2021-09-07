@@ -4,6 +4,7 @@ import axios from "axios";
 import cls from "../MainPage/MainPage.module.css";
 import Transaction from "../MainPage/components/TransactionsBlock/Transaction/Transaction";
 import authcl from "../SharedComponents/AuthButton.module.css";
+import {Link} from "react-router-dom";
 
 function TransactionsPage(props) {
     const [data, setData] = useState();
@@ -63,7 +64,9 @@ function TransactionsPage(props) {
                         )
                     }
                 )}
-                <button className={authcl.auth + " " + authcl.lone}>Вернуться</button>
+                <Link to={"/app"}>
+                    <button className={authcl.auth + " " + authcl.lone}>Вернуться</button>
+                </Link>
             </div>
         </div>
     ) : <div className={cls.transactionsBlock}>Loading...</div>
