@@ -149,6 +149,7 @@ app.post("/gettransactionsexin", jsonParser,  (req, res) => {
             return console.error(err);
         else {
             console.log(exin);
+
             const transaction = results.map((el) => (
                 {
                     tag: el.tag,
