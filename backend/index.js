@@ -128,11 +128,33 @@ app.post("/gettransactions", jsonParser,  (req, res) => {
             const transaction = results.map((el) => (
                 {
                     tag: el.tag,
-                    exin: el.exin,
                     amount: el.amount,
                     datetime: el.datetime,
                     id: el.id,
-                    uid: uid
+                }
+            ));
+            return res.json(transaction);
+        }
+    });
+});
+
+app.post("/gettransactionsexin", jsonParser,  (req, res) => {
+    if (!req.body) return res.sendStatus(400);
+
+    const uid = req.body.uid;
+    const exin = req.body.exin;
+
+    connection.query("SELECT id, tag, exin, amount, datetime FROM transactions WHERE uid=? AND exin=?", [uid, exin], (err, results) => {
+        if (err)
+            return console.error(err);
+        else {
+            console.log(exin);
+            const transaction = results.map((el) => (
+                {
+                    tag: el.tag,
+                    amount: el.amount,
+                    datetime: el.datetime,
+                    id: el.id
                 }
             ));
             return res.json(transaction);
@@ -153,11 +175,9 @@ app.post("/gettransactionsinit", jsonParser,  (req, res) => {
             const transaction = results.map((el) => (
                 {
                     tag: el.tag,
-                    exin: el.exin,
                     amount: el.amount,
                     datetime: el.datetime,
-                    id: el.id,
-                    uid: uid
+                    id: el.id
                 }
             ));
             return res.json(transaction);

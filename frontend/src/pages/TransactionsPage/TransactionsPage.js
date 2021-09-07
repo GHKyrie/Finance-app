@@ -12,20 +12,36 @@ function TransactionsPage(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = JSON.stringify({
-                "uid": sessionStorage.uid,
-                "begin": "1980-07-19 00:07:20",
-                "end": "2070-07-20 02:07:20"
-            });
+            let config;
+            let data;
 
-            const config = {
-                method: 'post',
-                url: 'http://localhost:5001/gettransactions',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: data
-            };
+            if (!sessionStorage.exin) {
+                data = JSON.stringify({
+                    "uid": sessionStorage.uid,
+                });
+                config = {
+                    method: 'post',
+                    url: 'http://localhost:5001/gettransactions',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: data
+                };
+            }
+            if (sessionStorage.exin) {
+                data = JSON.stringify({
+                    "uid": sessionStorage.uid,
+                    "exin": sessionStorage.exin
+                });
+                config = {
+                    method: 'post',
+                    url: 'http://localhost:5001/gettransactionsexin',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: data
+                };
+            }
 
             const result = await axios(config);
 
