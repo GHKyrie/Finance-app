@@ -13,12 +13,12 @@ function Menu(props) {
 
     return(
         <nav className={classes.menu}>
-            <Link to="/transactions">
+            <Link to="/transactionsexin">
                 <button className={classes.item}
                         onClick={exin1}
                         className={authcl.auth}>Доходы</button>
             </Link>
-            <Link to="/transactions">
+            <Link to="/transactionsexin">
                 <button className={classes.item}
                         onClick={exin0}
                         className={authcl.auth}>Расходы</button>

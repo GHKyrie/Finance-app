@@ -12,7 +12,12 @@ function App() {
                 <Route exact path="/signup" component={SignupPage}/>
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/app" component={MainPage}/>
-                <Route exact path="/transactions" component={TransactionsPage}/>
+                <Route exact path="/transactions">
+                    <TransactionsPage type={"all"}/>
+                </Route>
+                <Route exact path="/transactionsexin">
+                    <TransactionsPage type={"exin"}/>
+                </Route>
                 <Route path="/" component={LoginPage}/>
             </Switch>
         </div>

@@ -15,7 +15,7 @@ function TransactionsPage(props) {
             let config;
             let data;
 
-            if (!sessionStorage.exin) {
+            if (props.type == "all") {
                 data = JSON.stringify({
                     "uid": sessionStorage.uid,
                 });
@@ -28,7 +28,7 @@ function TransactionsPage(props) {
                     data: data
                 };
             }
-            if (sessionStorage.exin) {
+            if (props.type == "exin") {
                 data = JSON.stringify({
                     "uid": sessionStorage.uid,
                     "exin": sessionStorage.exin

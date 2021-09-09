@@ -118,10 +118,8 @@ app.post("/gettransactions", jsonParser,  (req, res) => {
     if (!req.body) return res.sendStatus(400);
 
     const uid = req.body.uid;
-    const begin = req.body.begin;
-    const end = req.body.end;
 
-    connection.query("SELECT id, tag, exin, amount, datetime FROM transactions WHERE uid=? AND datetime>=? AND datetime<=?", [uid, begin, end], (err, results) => {
+    connection.query("SELECT id, tag, exin, amount, datetime FROM transactions WHERE uid=?", [uid], (err, results) => {
         if (err)
             return console.error(err);
         else {
