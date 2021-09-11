@@ -11,27 +11,49 @@ const generateData = (data) => (
     }))
 )
 
+const generateSums = (data) => {
+    let expenses = 0;
+    let income = 0;
+    let sum;
+
+    data.forEach(item => {
+        if (item.exin == 0)
+            expenses += item.amount;
+        else
+            income += item.amount;
+    });
+
+    console.log(expenses);
+    console.log(income);
+
+    sum = income - expenses;
+
+    return [sum, income, expenses];
+}
+
 function DiagramBlock(props) {
 
     const [data, setData] = useState(generateData(props.data));
+    const [sums, setSums] = useState(generateSums(props.data));
 
     useEffect(() => {
         setData(generateData(props.data));
-    }, [!data]);
+        setSums(generateSums(props.data));
+    }, [!data, !sums]);
 
     return (
         <div className={classes.diagramBlock}>
             <div className={classes.diagram}>
                 <Pie
                     data={data}
-                    width={400}
-                    height={400}
+                    width={320}
+                    height={320}
                     innerRadius={0}
-                    outerRadius={200}
+                    outerRadius={160}
                 />
             </div>
-            <Total/>
-            <TotalStats/>
+            <Total data={sums[0]}/>
+            <TotalStats data={sums}/>
         </div>
     );
 

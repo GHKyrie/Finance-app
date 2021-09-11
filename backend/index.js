@@ -64,7 +64,6 @@ app.post("/registration", jsonParser, (req, res) => {
     });
 });
 
-
 app.post("/authorization", jsonParser, (req, res) => {
     if (!req.body) return res.sendStatus(400);
 
@@ -176,7 +175,8 @@ app.post("/gettransactionsinit", jsonParser,  (req, res) => {
                     tag: el.tag,
                     amount: el.amount,
                     datetime: el.datetime,
-                    id: el.id
+                    id: el.id,
+                    exin: el.exin
                 }
             ));
             return res.json(transaction);

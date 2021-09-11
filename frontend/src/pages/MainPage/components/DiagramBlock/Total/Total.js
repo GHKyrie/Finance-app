@@ -3,8 +3,8 @@ import classes from './Total.module.css';
 function Total(props) {
     return(
         <div className={classes.total}>
-            <h2>Общая сумма</h2>
-            <p>₽ 1274</p>
+            <h2>Итого: </h2>
+            <p>₽ {props.data}</p>
         </div>
     );
 }
