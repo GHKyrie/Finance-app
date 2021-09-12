@@ -23,9 +23,6 @@ const generateSums = (data) => {
             income += item.amount;
     });
 
-    console.log(expenses);
-    console.log(income);
-
     sum = income - expenses;
 
     return [sum, income, expenses];

@@ -4,7 +4,7 @@ function TotalStats(props) {
     return(
         <div className={classes.totalStats}>
             <div className={classes.income}>
-                <h2>Доходы</h2>
+                <h2>Доход</h2>
                 <p>₽ {props.data[1]}</p>
             </div>
             <div className={classes.expenses}>

@@ -128,6 +128,7 @@ app.post("/gettransactions", jsonParser,  (req, res) => {
                     amount: el.amount,
                     datetime: el.datetime,
                     id: el.id,
+                    exin: el.exin
                 }
             ));
             return res.json(transaction);
@@ -152,7 +153,8 @@ app.post("/gettransactionsexin", jsonParser,  (req, res) => {
                     tag: el.tag,
                     amount: el.amount,
                     datetime: el.datetime,
-                    id: el.id
+                    id: el.id,
+                    exin: el.exin
                 }
             ));
             return res.json(transaction);
