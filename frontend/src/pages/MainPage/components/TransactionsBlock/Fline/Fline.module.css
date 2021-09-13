@@ -22,3 +22,11 @@
 .expand:hover{
     background: rgba(255,255,255,0.3);
 }
+
+.transTitle{
+    background: transparent;
+    border: 0;
+    font-size: 18px;
+    padding: 10px 15px;
+    font-weight: 600;
+}

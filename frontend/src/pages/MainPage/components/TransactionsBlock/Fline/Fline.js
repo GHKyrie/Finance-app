@@ -6,9 +6,16 @@ function Fline(props) {
         console.log(sessionStorage.exin);
     }
 
+    const newTransaction = () => {
+        console.log(1);
+    }
+
     return(
         <div className={classes.Fline}>
-            <div className={classes.transTitle}>Транзакции</div>
+            <button onClick={newTransaction}
+                className={classes.transTitle}>
+                Добавить транзакцию
+            </button>
             <Link to={"/transactions"}>
                 <button
                     className={classes.expand}
