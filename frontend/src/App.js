@@ -4,6 +4,7 @@ import MainPage from "./pages/MainPage/MainPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import TransactionsPage from "./pages/TransactionsPage/TransactionsPage";
+import Modal from "./pages/TransactionsPage/Modal/Modal";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route exact path="/transactionsexin">
                     <TransactionsPage type={"exin"}/>
                 </Route>
+                <Route exact path="/addtransaction" component={Modal}/>
                 <Route path="/" component={LoginPage}/>
             </Switch>
         </div>

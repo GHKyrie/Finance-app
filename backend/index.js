@@ -103,7 +103,7 @@ app.post("/addtransaction", jsonParser,(req, res) => {
     const amount = req.body.amount;
     const datetime = req.body.datetime;
 
-    connection.query("INSERT INTO transactions (uid, tag, exin, amount, datetime) VALUES (?,?,?,?,?)", [uid,tag,exin, amount, datetime], (err, results) => {
+    connection.query("INSERT INTO transactions (uid, tag, exin, amount, datetime) VALUES (?,?,?,?,?)", [uid, tag, exin, amount, datetime], (err, results) => {
         if (err) return console.error(err);
         else {
             console.log("Данные добавлены");

@@ -1,5 +1,7 @@
 import classes from "./Fline.module.css";
 import {Link} from "react-router-dom";
+import Modal from "../../../../TransactionsPage/Modal/Modal";
+
 function Fline(props) {
     const clearExin = () => {
         sessionStorage.exin = undefined;
@@ -10,12 +12,13 @@ function Fline(props) {
         console.log(1);
     }
 
-    return(
+    return (
         <div className={classes.Fline}>
-            <button onClick={newTransaction}
-                className={classes.transTitle}>
-                Добавить транзакцию
-            </button>
+            <Link to={"/addtransaction"}>
+                <button className={classes.transTitle}>
+                    Добавить транзакцию
+                </button>
+            </Link>
             <Link to={"/transactions"}>
                 <button
                     className={classes.expand}
