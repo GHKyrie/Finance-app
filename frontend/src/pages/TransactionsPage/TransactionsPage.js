@@ -10,7 +10,6 @@ function TransactionsPage(props) {
     const generateSums = (data) => {
         let expenses = 0;
         let income = 0;
-        let sum;
 
         data.forEach(item => {
             if (item.exin == 0)
@@ -19,11 +18,7 @@ function TransactionsPage(props) {
                 income += item.amount;
         });
 
-        sum = income - expenses;
-
-        console.log(sum);
-        console.log(income);
-        console.log(expenses);
+        const sum = income - expenses;
 
         return [sum, income, expenses];
     }

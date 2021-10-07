@@ -4,9 +4,35 @@ import acl from "../../SharedComponents/AuthButton.module.css";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import cl from "../../SharedComponents/AuthForm.module.css";
 import fcl from "../../LoginPage/components/LoginField.module.css";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import nusercl from "../../LoginPage/components/NewUser.module.css";
 import * as React from "react";
+import axios from "axios";
+
+const addReq = async values => {
+    console.log(values.datetime);
+
+    const data = JSON.stringify({
+        "uid": sessionStorage.uid,
+        "tag": values.tag,
+        "exin": values.exin,
+        "amount": values.amount,
+        "datetime": values.datetime
+    });
+
+    const config = {
+        method: 'post',
+        url: 'http://localhost:5001/addtransaction',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: data
+    };
+
+    const result = await axios(config);
+
+    return result;
+}
 
 const validate = values => {
     const errors = {};
@@ -42,24 +68,26 @@ const validate = values => {
 }
 
 const Modal = (props) => {
+    const history = useHistory();
+
     return (
         <Formik
             initialValues={{login: '', email: '', password: '', confpass: ''}}
-            // validate={validate}
+            validate={validate}
             onSubmit={async (values, {setSubmitting}) => {
                 const btn = document.getElementsByClassName(acl.auth)[0];
 
-                // try {
-                //     const res = await regreq(values);
-                //
-                //     if (res.status == "200")
-                //     {
-                //         btn.innerText = "Подождите немного...";
-                //         setTimeout(() => { history.push("/login") }, 500);
-                //     }
-                // } catch (e) {
-                //     btn.innerText = "Ошибка регистрации";
-                // }
+                try {
+                    const res = await addReq(values);
+
+                    if (res.status == "200")
+                    {
+                        btn.innerText = "Подождите немного...";
+                        setTimeout(() => { history.push("/app") }, 500);
+                    }
+                } catch (e) {
+                    btn.innerText = "Ошибка регистрации";
+                }
 
                 setSubmitting(false);
             }}
@@ -95,7 +123,7 @@ const Modal = (props) => {
                     <Field className={fcl.field}
                            name="datetime"
                            placeholder="Дата"
-                           type="password"
+                           type="datetime-local"
                            autoComplete="off"
                     />
                     <ErrorMessage name="datetime"/>
